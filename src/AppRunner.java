@@ -23,8 +23,8 @@ public class AppRunner {
                 new Pistachios(ActionLetter.G, 130)
         });
         coinAcceptor = new CoinAcceptor(100);
-    }
 
+    }
     public static void run() {
         AppRunner app = new AppRunner();
         while (!isExit) {
@@ -56,6 +56,7 @@ public class AppRunner {
 
     private void chooseAction(UniversalArray<Product> products) {
         print(" a - Пополнить баланс");
+        print(" x - для пополнения через карту ");
         showActions(products);
         print(" h - Выйти");
         String action = fromConsole().substring(0, 1);
@@ -63,6 +64,8 @@ public class AppRunner {
             coinAcceptor.setAmount(coinAcceptor.getAmount() + 10);
             print("Вы пополнили баланс на 10");
             return;
+        }else if("x".equalsIgnoreCase(action)){
+            AddFundsFromCard();
         }
         try {
             for (int i = 0; i < products.size(); i++) {
@@ -76,12 +79,17 @@ public class AppRunner {
             if ("h".equalsIgnoreCase(action)) {
                 isExit = true;
             } else {
-                print("Недопустимая буква. Попрбуйте еще раз.");
+                print("Недопустимая буква. Попробуйте еще раз.");
                 chooseAction(products);
             }
         }
+    }
 
-
+    private void AddFundsFromCard(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите сумму для пополнения: ");
+        int amountToAdd = scanner.nextInt();
+        coinAcceptor.AddFundsFromCard(amountToAdd);
     }
 
     private void showActions(UniversalArray<Product> products) {
