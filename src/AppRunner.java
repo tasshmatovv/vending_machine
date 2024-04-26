@@ -79,7 +79,7 @@ public class AppRunner {
             if ("h".equalsIgnoreCase(action)) {
                 isExit = true;
             } else {
-                print("Недопустимая буква. Попрбуйте еще раз.");
+                print("Недопустимая буква. Попробуйте еще раз.");
                 chooseAction(products);
             }
         }
@@ -91,9 +91,6 @@ public class AppRunner {
         int amountToAdd = scanner.nextInt();
         coinAcceptor.AddFundsFromCard(amountToAdd);
     }
-
-
-
 
     private void showActions(UniversalArray<Product> products) {
         for (int i = 0; i < products.size(); i++) {
