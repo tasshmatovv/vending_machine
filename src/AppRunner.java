@@ -23,8 +23,8 @@ public class AppRunner {
                 new Pistachios(ActionLetter.G, 130)
         });
         coinAcceptor = new CoinAcceptor(100);
-    }
 
+    }
     public static void run() {
         AppRunner app = new AppRunner();
         while (!isExit) {
@@ -80,9 +80,18 @@ public class AppRunner {
                 chooseAction(products);
             }
         }
-
-
     }
+
+    private void AddFundsFromCard(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите сумму для пополнения: ");
+        int amountToAdd = scanner.nextInt();
+        coinAcceptor.AddFundsFromCard(amountToAdd);
+        coinAcceptor.AddFundsFromCard(amountToAdd);
+    }
+
+
+
 
     private void showActions(UniversalArray<Product> products) {
         for (int i = 0; i < products.size(); i++) {
