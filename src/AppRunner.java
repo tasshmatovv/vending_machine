@@ -3,6 +3,7 @@ import model.*;
 import util.UniversalArray;
 import util.UniversalArrayImpl;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class AppRunner {
@@ -60,9 +61,8 @@ public class AppRunner {
         print(" h - Выйти");
         String action = fromConsole().substring(0, 1);
         if ("a".equalsIgnoreCase(action)) {
-            coinAcceptor.setAmount(coinAcceptor.getAmount() + 10);
-            print("Вы пополнили баланс на 10");
-            return;
+            topUpYourBalance();
+
         }
         try {
             for (int i = 0; i < products.size(); i++) {
@@ -99,6 +99,67 @@ public class AppRunner {
             print(products.get(i).toString());
         }
     }
+
+    private void topUpYourBalance (){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Выберите способ оплаты: \nA) Пополнить через карту\n B) Пополнить через купюро приемник\n С) Пополнить через монетоприемник");
+        String paymentMethod = sc.nextLine();
+
+        switch (paymentMethod){
+            case "A":
+                viaCard();
+                break
+                ;
+            case "B":
+                viaBanknotes();
+                break
+                ;
+            case "C":
+                viaKoins();
+                break
+                ;
+        }
+    }
+
+    private void viaCard(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Введите сумму оплаты: ");
+        int sumOfPayment = Math.abs(sc.nextInt());
+
+        Random r = new Random();
+
+        int confirmationCode = r.nextInt(1,5);
+        int confirmationCodeFromUser = 0;
+
+        while(confirmationCode == confirmationCodeFromUser){
+            System.out.println("Введите код подтверждения на вашем телефоне (1-5): ");
+             confirmationCodeFromUser = Math.abs(sc.nextInt());
+            if (confirmationCode != confirmationCodeFromUser){
+                System.out.println("Код неправильный! Попробуйте ещё раз!");
+            }
+            System.out.println("Вы успешно пополнили балланс! ");
+            coinAcceptor.setAmount(coinAcceptor.getAmount() + sumOfPayment );
+        }
+
+
+    }
+
+    private void viaBanknotes(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Введите сумму оплаты: ");
+        int sumOfPayment = Math.abs(sc.nextInt());
+        System.out.println("Вы успешно пополнили балланс! ");
+        coinAcceptor.setAmount(coinAcceptor.getAmount() + sumOfPayment );
+    }
+
+    private void viaKoins(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Введите сумму оплаты: ");
+        int sumOfPayment = Math.abs(sc.nextInt());
+        System.out.println("Вы успешно пополнили балланс! ");
+        coinAcceptor.setAmount(coinAcceptor.getAmount() + sumOfPayment );
+    }
+
 
     private void print(String msg) {
         System.out.println(msg);
